@@ -1,5 +1,6 @@
 package com.service.HotelService.entity;
 
+import com.service.HotelService.dto.UserDto;
 import com.service.HotelService.enums.UserRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,9 +29,35 @@ public class User implements UserDetails {
 
     private UserRole userRole;
 
+    public UserDto getUserDto(){
+        UserDto userDto = new UserDto();
+        userDto.setId(id);
+        userDto.setName(name);
+        userDto.setEmail(email);
+        userDto.setUserRole(userRole);
+        return userDto;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(userRole.name()));
+    }
+
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     @Override
