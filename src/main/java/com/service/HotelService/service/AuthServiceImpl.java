@@ -38,13 +38,13 @@ public class AuthServiceImpl implements AuthService{
     }
 
     public UserDto createUser(SignReq signReq) {
-        if (userRepo.findFirstByEmail(signReq.getPassowrd()).isPresent()) {
+        if (userRepo.findFirstByEmail(signReq.getPassword()).isPresent()) {
             throw new EntityExistsException("該信箱已存在其他使用者，請更換其他信箱申請！" + signReq.getEmail());
         }
         User user = new User();
         user.setEmail(signReq.getEmail());
         user.setName(signReq.getName());
-        user.setPassword(new BCryptPasswordEncoder().encode(signReq.getPassowrd()));
+        user.setPassword(new BCryptPasswordEncoder().encode(signReq.getPassword()));
         user.setUserRole(UserRole.CUSTOMER);
         User createUser = userRepo.save(user);
         return createUser.getUserDto();

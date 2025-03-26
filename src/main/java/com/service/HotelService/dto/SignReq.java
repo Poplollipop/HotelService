@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class SignReq {
     private String email;
-    private String passowrd;
+    private String password;
     private String name;
 
     public String getEmail() {
@@ -16,12 +16,12 @@ public class SignReq {
         this.email = email;
     }
 
-    public String getPassowrd() {
-        return passowrd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassowrd(String passowrd) {
-        this.passowrd = passowrd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
