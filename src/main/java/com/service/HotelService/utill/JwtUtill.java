@@ -53,9 +53,9 @@ public class JwtUtill {
     final Claims claims = extractAllClaims(token);
     return claimsResolvers.apply(claims);
     }
-
+    private static final String SECRET_KEY = "H0edkBMMXFd8OGsJnSJI0xND9bD77axG1LUAkFjyv4k=";
     private Key getSignKey(){
-        byte[] keyBytes = Decoders.BASE64.decode("VGVzdA==");
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
