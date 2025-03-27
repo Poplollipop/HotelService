@@ -11,6 +11,8 @@ import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
@@ -38,7 +40,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     public UserDto createUser(SignReq signReq) {
-        if (userRepo.findFirstByEmail(signReq.getPassword()).isPresent()) {
+        if (userRepo.findFirstByEmail(signReq.getEmail()).isPresent()) {
             throw new EntityExistsException("該信箱已存在其他使用者，請更換其他信箱申請！" + signReq.getEmail());
         }
         User user = new User();
@@ -48,6 +50,7 @@ public class AuthServiceImpl implements AuthService{
         user.setUserRole(UserRole.CUSTOMER);
         User createUser = userRepo.save(user);
         return createUser.getUserDto();
+
     }
 
 }

@@ -7,6 +7,7 @@ import com.service.HotelService.dto.UserDto;
 import com.service.HotelService.entity.User;
 import com.service.HotelService.repo.UserRepo;
 import com.service.HotelService.service.AuthService;
+import com.service.HotelService.service.UserService;
 import com.service.HotelService.utill.JwtUtill;
 
 import jakarta.persistence.EntityExistsException;
@@ -38,6 +39,8 @@ public class UserAuthController {
 
     private final JwtUtill jwtUtill;
 
+    private final UserService userService;
+
 
     @PostMapping("/signup")
     public ResponseEntity<?> signupUser(@RequestBody SignReq signReq) {
@@ -57,9 +60,9 @@ public class UserAuthController {
             authtManager.authenticate(new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
         } catch (BadCredentialsException e) {
             throw new BadCredentialsException("使用者名稱或密碼錯誤！!！");
-        } 
+        }
 
-        final UserDetails userDetails = null;
+        final UserDetails userDetails = userService.userDetailsService().loadUserByUsername(req.getEmail());
         Optional<User> opUser = userRepo.findFirstByEmail(userDetails.getUsername());
         final String jwt = jwtUtill.generateToken(userDetails);
         AuthenticationRes res = new AuthenticationRes();
@@ -70,5 +73,4 @@ public class UserAuthController {
         }
         return res;
     }
-
 }
