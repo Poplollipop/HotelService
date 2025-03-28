@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class CrosFilter implements Filter {
+public class CorsFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -24,16 +24,18 @@ public class CrosFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse res = (HttpServletResponse) servletResponse;
         HttpServletRequest req = (HttpServletRequest) servletRequest;
-        String originHeader = req.getHeader("origin");
-        res.setHeader("Acess-Control-Allow-Origin", originHeader);
-        res.setHeader("Acess-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
-        res.setHeader("Acess-Control-Max-Age", "3600");
-        res.setHeader("Acess-Control-Headers", "*");
+        String originHeader = req.getHeader("Origin");
+        res.setHeader("Access-Control-Allow-Origin", originHeader);
+        res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+        res.setHeader("Access-Control-Max-Age", "3600");
+        res.setHeader("Access-Control-Allow-Headers", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
         if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
             res.setStatus(HttpServletResponse.SC_OK);
         }
         if (!"OPTIONS".equalsIgnoreCase(req.getMethod())) {
            filterChain.doFilter(servletRequest, servletResponse);
+           return;
         }
         
     }
