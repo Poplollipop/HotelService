@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RoomsServiceImpl implements RoomsService {
 
-    private RoomsRepo roomsRepo;
+    private final RoomsRepo roomsRepo;
 
     public boolean postRooms(RoomsDto roomsDto) {
         try {
@@ -24,6 +24,7 @@ public class RoomsServiceImpl implements RoomsService {
             roomsRepo.save(rooms);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
