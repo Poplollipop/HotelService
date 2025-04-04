@@ -31,7 +31,7 @@ public class RoomsController {
         return ResponseEntity.ok(roomsService.getAllRooms(pageNumber));
     }
 
-    @GetMapping("/rooms/{id}")
+    @GetMapping("/room/{id}")
     public ResponseEntity<?> getRoomById(@PathVariable Long id){
         try{
             return ResponseEntity.ok(roomsService.getRoomById(id));
