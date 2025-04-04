@@ -5,6 +5,7 @@ import com.service.HotelService.dto.RoomResDto;
 import com.service.HotelService.dto.RoomsDto;
 import com.service.HotelService.entity.Rooms;
 import com.service.HotelService.repo.RoomsRepo;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,6 +46,15 @@ public class RoomsServiceImpl implements RoomsService {
         roomResDto.setPages(roomsPage.getTotalPages());
         roomResDto.setRoomsDtoList(roomsPage.stream().map(Rooms::getRoomsDto).collect(Collectors.toList()));
         return roomResDto;
+    }
+
+    public RoomsDto getRoomById(Long id){
+        Optional<Rooms> optionalRooms = roomsRepo.findById(id);
+        if (optionalRooms.isPresent()) {
+            return optionalRooms.get().getRoomsDto();
+        }else {
+            throw new EntityNotFoundException("您所搜尋的房間並不存在！");
+        }
     }
 
 }
