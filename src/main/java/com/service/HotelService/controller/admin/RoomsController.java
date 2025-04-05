@@ -41,4 +41,14 @@ public class RoomsController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("錯誤發生，請稍後嘗試！");
         }
     }
+
+    @PutMapping("/room/{id}")
+    public ResponseEntity<?> updateRoom(@PathVariable Long id,@RequestBody RoomsDto roomsDto){
+        boolean success = roomsService.updateRoom(id, roomsDto);
+        if (success) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }else return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+
 }

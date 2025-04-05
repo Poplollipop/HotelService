@@ -11,4 +11,7 @@ public interface RoomsService {
     RoomResDto getAllRooms(int pageNumber);
 
     RoomsDto getRoomById(Long id);
+
+    boolean updateRoom(Long id, RoomsDto roomsDto);
+
 }

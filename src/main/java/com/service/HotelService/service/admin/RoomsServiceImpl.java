@@ -48,13 +48,27 @@ public class RoomsServiceImpl implements RoomsService {
         return roomResDto;
     }
 
-    public RoomsDto getRoomById(Long id){
+    public RoomsDto getRoomById(Long id) {
         Optional<Rooms> optionalRooms = roomsRepo.findById(id);
         if (optionalRooms.isPresent()) {
             return optionalRooms.get().getRoomsDto();
-        }else {
+        } else {
             throw new EntityNotFoundException("您所搜尋的房間並不存在！");
         }
+    }
+
+    public boolean updateRoom(Long id, RoomsDto roomsDto) {
+        Optional<Rooms> optionalRooms = roomsRepo.findById(id);
+        if (optionalRooms.isPresent()) {
+            Rooms existedRoom = optionalRooms.get();
+
+            existedRoom.setName(roomsDto.getName());
+            existedRoom.setPrice(roomsDto.getPrice());
+            existedRoom.setType((roomsDto.getType()));
+            roomsRepo.save(existedRoom);
+            return true;
+        }
+        return false;
     }
 
 }
