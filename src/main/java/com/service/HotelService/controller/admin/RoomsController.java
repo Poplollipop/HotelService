@@ -21,34 +21,43 @@ public class RoomsController {
         boolean success = roomsService.postRooms(roomsDto);
         if (success) {
             return ResponseEntity.status(HttpStatus.OK).build();
-        }else  {
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
     @GetMapping("/rooms/{pageNumber}")
-    public ResponseEntity<?> getAllRooms(@PathVariable int pageNumber){
+    public ResponseEntity<?> getAllRooms(@PathVariable int pageNumber) {
         return ResponseEntity.ok(roomsService.getAllRooms(pageNumber));
     }
 
     @GetMapping("/room/{id}")
-    public ResponseEntity<?> getRoomById(@PathVariable Long id){
-        try{
+    public ResponseEntity<?> getRoomById(@PathVariable Long id) {
+        try {
             return ResponseEntity.ok(roomsService.getRoomById(id));
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("錯誤發生，請稍後嘗試！");
         }
     }
 
     @PutMapping("/room/{id}")
-    public ResponseEntity<?> updateRoom(@PathVariable Long id,@RequestBody RoomsDto roomsDto){
+    public ResponseEntity<?> updateRoom(@PathVariable Long id, @RequestBody RoomsDto roomsDto) {
         boolean success = roomsService.updateRoom(id, roomsDto);
         if (success) {
             return ResponseEntity.status(HttpStatus.OK).build();
-        }else return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+    @DeleteMapping("/room/{id}")
+    public ResponseEntity<?> deleteRoom(@PathVariable Long id) {
+        try {
+            roomsService.deleteRoom(id);
+            return ResponseEntity.ok(null);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 
 }

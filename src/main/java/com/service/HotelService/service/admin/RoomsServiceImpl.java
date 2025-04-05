@@ -71,4 +71,13 @@ public class RoomsServiceImpl implements RoomsService {
         return false;
     }
 
+    public void deleteRoom(Long id){
+        Optional<Rooms> optionalRooms = roomsRepo.findById(id);
+        if(optionalRooms.isPresent()){
+            roomsRepo.deleteById(id);
+        }else {
+            throw new EntityNotFoundException("您所刪除的房間並不存在！");
+        }
+    }
+
 }
