@@ -1,5 +1,6 @@
 package com.service.HotelService.entity;
 
+import com.service.HotelService.dto.RoomStatusDto;
 import com.service.HotelService.enums.RoomsStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -22,8 +23,7 @@ public class RoomStatus {
     private LocalDate checkOutDate;
 
     private Long price;
-
-    @Enumerated(EnumType.STRING)
+    @Column(name = "rooms_status")
     private RoomsStatus roomsStatus;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -36,4 +36,20 @@ public class RoomStatus {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
+    public RoomStatusDto getRoomStatusDto() {
+        RoomStatusDto roomStatusDto = new RoomStatusDto();
+        roomStatusDto.setId(id);
+        roomStatusDto.setPrice(price);
+        roomStatusDto.setCheckInDate(checkInDate);
+        roomStatusDto.setCheckOutDate(checkOutDate);
+        roomStatusDto.setRoomsStatus(roomsStatus);
+        roomStatusDto.setUserId(user.getId());
+        roomStatusDto.setUserName(user.getUsername());
+        roomStatusDto.setRoomId(rooms.getId());
+        roomStatusDto.setRoomName(rooms.getName());
+        roomStatusDto.setRoomType(rooms.getType());
+
+        return roomStatusDto;
+
+    }
 }
