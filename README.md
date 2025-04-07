@@ -76,6 +76,7 @@
 ```
 
 ## 文件解釋
+```
 /src/main/java/com/service/HotelService
 主程式區，包含整個應用的核心邏輯模組。
 📁 config/
@@ -109,3 +110,4 @@ AuthService.java / AuthServiceImpl.java
 
 📄 HotelServiceApplication.java
 專案主程式入口（Spring Boot 啟動點）
+```
