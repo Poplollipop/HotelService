@@ -2,7 +2,7 @@
 
 ## 專案簡介
 一個基於 Spring Boot 和 MySQL 的飯店房間管理系統，提供房間管理、訂房系統管理等功能。
-
+![image](https://github.com/Poplollipop/HotelService/blob/main/demo.png)
 ## 技術
 - **後端**: Java Spring Boot
 - **前端**: Angular
